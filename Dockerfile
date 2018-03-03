@@ -1,6 +1,7 @@
 FROM alpine:latest
 MAINTAINER Francesco Colista <fcolista@alpinelinux.org>
 COPY ./start.sh /usr/local/bin/start.sh
+ENV MSF_TAG=4.16.43
 ENV PATH=$PATH:/usr/share/metasploit-framework 
 ENV NOKOGIRI_USE_SYSTEM_LIBRARIES=1
 RUN chmod +x /usr/local/bin/start.sh && \
@@ -36,8 +37,9 @@ RUN chmod +x /usr/local/bin/start.sh && \
         ncurses 
 
 RUN cd /usr/share && \
-    git clone https://github.com/rapid7/metasploit-framework.git && \
+    git clone --depth 1 https://github.com/rapid7/metasploit-framework.git && \
     cd /usr/share/metasploit-framework && \
+    git checkout $MSF_TAG && \
     bundle install
 
 RUN apk del \
@@ -58,5 +60,4 @@ RUN apk del \
 	autoconf \
 	&& rm -rf /var/cache/apk/*
 
-VOLUME [ "/usr/share/metasploit-framework" ]
 CMD [ "/usr/local/bin/start.sh" ] 
