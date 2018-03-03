@@ -37,9 +37,8 @@ RUN chmod +x /usr/local/bin/start.sh && \
         ncurses 
 
 RUN cd /usr/share && \
-    git clone --depth 1 https://github.com/rapid7/metasploit-framework.git && \
+    git clone --branch $MSF_TAG --depth 1 https://github.com/rapid7/metasploit-framework.git && \
     cd /usr/share/metasploit-framework && \
-    git checkout $MSF_TAG && \
     bundle install
 
 RUN apk del \
