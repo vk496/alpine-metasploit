@@ -23,6 +23,7 @@ sh -c "echo 'production:
   port: 5432
   pool: 75
   timeout: 5' > /usr/share/metasploit-framework/config/database.yml"
+  /usr/share/metasploit-framework/msfconsole
 else
 	echo "USAGE:"
 	echo "	1. Setup a database:"
@@ -33,5 +34,3 @@ else
 	echo " I'm going to run metasploit without DB connection..."
 	/usr/share/metasploit-framework/msfconsole -n
 fi
-
-/usr/share/metasploit-framework/msfconsole
