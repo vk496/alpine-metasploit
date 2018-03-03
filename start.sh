@@ -1,9 +1,10 @@
 #!/bin/sh
+set -x
 
 /usr/share/metasploit-framework/msfupdate
 
 MSFUSER=${MSFUSER:-postgres}
-MSFPASS=${MSFPASS:-postgres}
+MSFPASS=${PGPASSWORD:-postgres}
 
 if ! [ -z "$DB_PORT_5432_TCP_ADDR" ]; then
 	# Check if user exists
@@ -23,14 +24,4 @@ sh -c "echo 'production:
   port: 5432
   pool: 75
   timeout: 5' > /usr/share/metasploit-framework/config/database.yml"
-  /usr/share/metasploit-framework/msfconsole
-else
-	echo "USAGE:"
-	echo "	1. Setup a database:"
-	echo "	   docker run -d --name=postgres postgres"
-	echo "	2. Link containers:"
-	echo "	   docker run -it --link postgres:db fcolista/alpine-metasploit"
-	echo ""
-	echo " I'm going to run metasploit without DB connection..."
-	/usr/share/metasploit-framework/msfconsole -n
 fi

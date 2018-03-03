@@ -59,4 +59,9 @@ RUN apk del \
 	autoconf \
 	&& rm -rf /var/cache/apk/*
 
-CMD [ "/usr/local/bin/start.sh" ] 
+RUN apk add --no-cache supervisor && \
+            mkdir /var/log/supervisor/
+
+COPY misc/supervisord.conf /etc/supervisord.conf
+
+CMD ["/usr/bin/supervisord"]
